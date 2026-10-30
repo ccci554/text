@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>财运开挂时间点测试</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-touch-callout: none; -webkit-user-select: none; }
+        body { font-family: sans-serif; background: #fffbe6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #fff; width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h2 { color: #faad14; margin-bottom: 15px; font-size: 20px; }
+        p { color: #666; margin-bottom: 20px; line-height: 1.6; font-size: 16px; }
+        button { background: #faad14; color: #fff; border: none; padding: 12px 20px; border-radius: 30px; width: 100%; margin-bottom: 10px; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        button:active { transform: scale(0.98); }
+        .result { display: none; font-size: 18px; font-weight: bold; color: #faad14; margin-top: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div id="quiz">
+        <h2>💰 财运开挂时间点测试</h2>
+        <p id="q-text">Q1. 突然发了一笔小奖金，你会怎么花？</p>
+        <button data-val="10">A. 存起来或者拿去理财 📈</button>
+        <button data-val="10">B. 犒劳自己，买想要的东西 🛍️</button>
+    </div>
+    <div id="result" class="result"></div>
+</div>
+<script>
+    let score = 0;
+    const questions = [
+        { q: "Q1. 突然发了一笔小奖金，你会怎么花？", opts: ["A. 存起来或者拿去理财 📈", "B. 犒劳自己，买想要的东西 🛍️"] },
+        { q: "Q2. 面对一个高风险高回报的投资机会，你会？", opts: ["A. 仔细研究，绝不盲目跟风 🔍", "B. 搏一搏，单车变摩托！ 🎲"] },
+        { q: "Q3. 你平时对金钱的态度是？", opts: ["A. 钱是赚出来的，要努力搞钱 💪", "B. 钱是省出来的，精打细算 🧮"] },
+        { q: "Q4. 如果现在有个暴富的机会，但需要付出极大努力，你？", opts: ["A. 冲！为了钱拼了 🔥", "B. 算了吧，还是健康最重要 🍵"] },
+        { q: "Q5. 你觉得钱对你来说意味着什么？", opts: ["A. 安全感，生活的底气 🛡️", "B. 自由，做自己想做的事 🕊️"] }
+    ];
+    let currentQ = 0;
+
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            score += parseInt(this.getAttribute('data-val'));
+            currentQ++;
+            if (currentQ < questions.length) {
+                document.getElementById('q-text').innerText = questions[currentQ].q;
+                const buttons = document.querySelectorAll('button');
+                buttons[0].innerText = questions[currentQ].opts[0];
+                buttons[1].innerText = questions[currentQ].opts[1];
+            } else {
+                showResult();
+            }
+        });
+    });
+
+    function showResult() {
+        document.getElementById('quiz').style.display = 'none';
+        const resDiv = document.getElementById('result');
+        resDiv.style.display = 'block';
+        let msg = score >= 40 ? "🚀 你的暴富节点：30岁前！你具备极强的财商和执行力，财富积累会非常快！" : "🌱 你的暴富节点：35岁后！你是厚积薄发型，前期稳扎稳打，后期财运源源不断！";
+        resDiv.innerText = `测试结果：\n${msg}`;
+    }
+</script>
+</body>
+</html>

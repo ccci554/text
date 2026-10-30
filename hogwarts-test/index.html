@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>魔法学院归属测试</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-touch-callout: none; -webkit-user-select: none; }
+        body { font-family: sans-serif; background: #f0f5ff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #fff; width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h2 { color: #2f54eb; margin-bottom: 15px; font-size: 20px; }
+        p { color: #666; margin-bottom: 20px; line-height: 1.6; font-size: 16px; }
+        button { background: #2f54eb; color: #fff; border: none; padding: 12px 20px; border-radius: 30px; width: 100%; margin-bottom: 10px; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        button:active { transform: scale(0.98); }
+        .result { display: none; font-size: 18px; font-weight: bold; color: #2f54eb; margin-top: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div id="quiz">
+        <h2>🧙 魔法学院归属测试</h2>
+        <p id="q-text">Q1. 分院帽问你：你最看重什么品质？</p>
+        <button data-val="10">A. 勇敢与无畏 🦁</button>
+        <button data-val="10">B. 智慧与博学 🦅</button>
+    </div>
+    <div id="result" class="result"></div>
+</div>
+<script>
+    let score = 0;
+    const questions = [
+        { q: "Q1. 分院帽问你：你最看重什么品质？", opts: ["A. 勇敢与无畏 🦁", "B. 智慧与博学 🦅"] },
+        { q: "Q2. 在魔药课上，教授让你改良配方，你会？", opts: ["A. 大胆尝试，打破常规 🧪", "B. 查阅古籍，严谨计算 📚"] },
+        { q: "Q3. 朋友被欺负了，你会怎么做？", opts: ["A. 冲上去保护朋友 🛡️", "B. 收集证据，用规则制裁对方 ⚖️"] },
+        { q: "Q4. 你最想拥有哪种神奇动物？", opts: ["A. 威风凛凛的狮鹫 🦅", "B. 聪明忠诚的猫头鹰 🦉"] },
+        { q: "Q5. 面对一扇未知的门，你会？", opts: ["A. 毫不犹豫地推开它 🚪", "B. 先观察一下门上的咒语 🔍"] }
+    ];
+    let currentQ = 0;
+
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            score += parseInt(this.getAttribute('data-val'));
+            currentQ++;
+            if (currentQ < questions.length) {
+                document.getElementById('q-text').innerText = questions[currentQ].q;
+                const buttons = document.querySelectorAll('button');
+                buttons[0].innerText = questions[currentQ].opts[0];
+                buttons[1].innerText = questions[currentQ].opts[1];
+            } else {
+                showResult();
+            }
+        });
+    });
+
+    function showResult() {
+        document.getElementById('quiz').style.display = 'none';
+        const resDiv = document.getElementById('result');
+        resDiv.style.display = 'block';
+        let msg = score >= 40 ? "🦁 你的归属学院：格兰芬多！你充满勇气，敢于挑战，是天生的领袖。" : "🦅 你的归属学院：拉文克劳！你热爱知识，充满好奇心，是个智慧的探索者。";
+        resDiv.innerText = `测试结果：\n${msg}`;
+    }
+</script>
+</body>
+</html>

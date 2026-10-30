@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>职场天选角色测试</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-touch-callout: none; -webkit-user-select: none; }
+        body { font-family: sans-serif; background: #f6ffed; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #fff; width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h2 { color: #52c41a; margin-bottom: 15px; font-size: 20px; }
+        p { color: #666; margin-bottom: 20px; line-height: 1.6; font-size: 16px; }
+        button { background: #52c41a; color: #fff; border: none; padding: 12px 20px; border-radius: 30px; width: 100%; margin-bottom: 10px; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        button:active { transform: scale(0.98); }
+        .result { display: none; font-size: 18px; font-weight: bold; color: #52c41a; margin-top: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div id="quiz">
+        <h2>💼 职场天选角色测试</h2>
+        <p id="q-text">Q1. 周末突然下大雨，你们更倾向于？</p>
+        <button data-val="10">A. 窝在沙发上点外卖看电影 🎬</button>
+        <button data-val="10">B. 打着伞去楼下便利店买零食 🏪</button>
+    </div>
+    <div id="result" class="result"></div>
+</div>
+<script>
+    let score = 0;
+    const questions = [
+        { q: "Q1. 周末突然下大雨，你们更倾向于？", opts: ["A. 窝在沙发上点外卖看电影 🎬", "B. 打着伞去楼下便利店买零食 🏪"] },
+        { q: "Q2. 吵架冷战时，谁先憋不住找对方？", opts: ["A. 永远是我先低头 🙋‍♀️", "B. 永远是他先服软 🙋‍♂️"] },
+        { q: "Q3. 路上看到超级可爱的小狗，反应是？", opts: ["A. 立刻冲过去疯狂贴贴 🤗", "B. 远远看着，怕吓到它 🥺"] },
+        { q: "Q4. 对象手机突然没电关机，第一反应？", opts: ["A. 担心是不是出什么事了 😰", "B. 终于清净了，爽！ 🍵"] },
+        { q: "Q5. 恋爱满三个月，最想要的庆祝方式？", opts: ["A. 互送精心准备的礼物 🎁", "B. 只要在一起，吃顿好的就行 🍲"] }
+    ];
+    let currentQ = 0;
+
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            score += parseInt(this.getAttribute('data-val'));
+            currentQ++;
+            if (currentQ < questions.length) {
+                document.getElementById('q-text').innerText = questions[currentQ].q;
+                const buttons = document.querySelectorAll('button');
+                buttons[0].innerText = questions[currentQ].opts[0];
+                buttons[1].innerText = questions[currentQ].opts[1];
+            } else {
+                showResult();
+            }
+        });
+    });
+
+    function showResult() {
+        document.getElementById('quiz').style.display = 'none';
+        const resDiv = document.getElementById('result');
+        resDiv.style.display = 'block';
+        let msg = score >= 40 ? "👑 你的职场角色是：团队核心！没有你，项目根本转不动。" : "🛡️ 你的职场角色是：靠谱辅助！默默填坑，深藏功与名。";
+        resDiv.innerText = `测试结果：\n${msg}`;
+    }
+</script>
+</body>
+</html>

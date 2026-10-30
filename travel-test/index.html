@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>灵魂旅行目的地测试</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-touch-callout: none; -webkit-user-select: none; }
+        body { font-family: sans-serif; background: #e6fffb; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: #fff; width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        h2 { color: #13c2c2; margin-bottom: 15px; font-size: 20px; }
+        p { color: #666; margin-bottom: 20px; line-height: 1.6; font-size: 16px; }
+        button { background: #13c2c2; color: #fff; border: none; padding: 12px 20px; border-radius: 30px; width: 100%; margin-bottom: 10px; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        button:active { transform: scale(0.98); }
+        .result { display: none; font-size: 18px; font-weight: bold; color: #13c2c2; margin-top: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div id="quiz">
+        <h2>🏝️ 灵魂旅行目的地测试</h2>
+        <p id="q-text">Q1. 如果给你一张免费机票，你最想去哪？</p>
+        <button data-val="10">A. 充满历史底蕴的欧洲小镇 🏰</button>
+        <button data-val="10">B. 阳光沙滩的东南亚海岛 🏖️</button>
+    </div>
+    <div id="result" class="result"></div>
+</div>
+<script>
+    let score = 0;
+    const questions = [
+        { q: "Q1. 如果给你一张免费机票，你最想去哪？", opts: ["A. 充满历史底蕴的欧洲小镇 🏰", "B. 阳光沙滩的东南亚海岛 🏖️"] },
+        { q: "Q2. 旅行途中遇到突发状况（如迷路），你会？", opts: ["A. 冷静查地图，规划新路线 🗺️", "B. 随便走走，说不定有惊喜 🚶"] },
+        { q: "Q3. 你更偏爱哪种旅行节奏？", opts: ["A. 每天打卡景点，行程满满 📸", "B. 睡到自然醒，主打一个松弛 ☕"] },
+        { q: "Q4. 旅行中最吸引你的是什么？", opts: ["A. 品尝当地特色美食 🍜", "B. 感受当地的风土人情 🎭"] },
+        { q: "Q5. 旅行结束回到家，你的第一感觉是？", opts: ["A. 终于能躺平了，还是家里舒服 🛋️", "B. 心还在外面，已经开始期待下一次 🥺"] }
+    ];
+    let currentQ = 0;
+
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            score += parseInt(this.getAttribute('data-val'));
+            currentQ++;
+            if (currentQ < questions.length) {
+                document.getElementById('q-text').innerText = questions[currentQ].q;
+                const buttons = document.querySelectorAll('button');
+                buttons[0].innerText = questions[currentQ].opts[0];
+                buttons[1].innerText = questions[currentQ].opts[1];
+            } else {
+                showResult();
+            }
+        });
+    });
+
+    function showResult() {
+        document.getElementById('quiz').style.display = 'none';
+        const resDiv = document.getElementById('result');
+        resDiv.style.display = 'block';
+        let msg = score >= 40 ? "🗼 你的灵魂归宿是：巴黎/京都！你骨子里是个浪漫又充满好奇心的文艺青年。" : "🌴 你的灵魂归宿是：马尔代夫/巴厘岛！你渴望自由，是个彻头彻尾的松弛感达人。";
+        resDiv.innerText = `测试结果：\n${msg}`;
+    }
+</script>
+</body>
+</html>
